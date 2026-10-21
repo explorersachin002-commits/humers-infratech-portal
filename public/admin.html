@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Portal | Humers Infratech Sikar</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <!-- Custom Stylesheet -->
+  <link rel="stylesheet" href="css/styles.css">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              900: '#0b1d30',
+              800: '#0f2b46',
+              700: '#163d63',
+              600: '#1e5285',
+              100: '#e2e8f0',
+              50: '#f8fafc'
+            },
+            accent: {
+              500: '#d97706',
+              600: '#b45309',
+              400: '#f59e0b'
+            }
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="blueprint-bg min-h-screen flex flex-col justify-between selection:bg-amber-100 selection:text-amber-900">
+
+  <!-- ========================================================
+       TOP HEADER
+       ======================================================== -->
+  <header class="w-full bg-white/90 backdrop-blur-md border-b border-slate-200 sticky top-0 z-40">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <a href="/" class="flex items-center gap-2 group">
+          <div class="w-9 h-9 rounded-lg bg-brand-800 flex items-center justify-center text-amber-400 font-bold shadow-md shadow-brand-900/10">
+            <i data-lucide="building-2" class="w-5 h-5"></i>
+          </div>
+          <div>
+            <span class="font-extrabold tracking-wider text-brand-800 text-sm uppercase font-['Cinzel'] block leading-none">Humers Infratech</span>
+            <span class="text-[10px] font-semibold text-amber-600 tracking-widest uppercase block mt-0.5">Admin Management</span>
+          </div>
+        </a>
+      </div>
+
+      <div class="flex items-center gap-2 sm:gap-3">
+        <a href="/" class="px-3.5 py-1.5 text-xs font-semibold rounded-lg border border-slate-300 text-slate-700 hover:bg-slate-100 transition-all flex items-center gap-1.5">
+          <i data-lucide="arrow-left" class="w-3.5 h-3.5"></i>
+          <span class="hidden sm:inline">Public Search</span>
+        </a>
+
+        <!-- Authenticated Menu Items (Hidden when logged out) -->
+        <div id="authActions" class="hidden flex items-center gap-2">
+          <button onclick="openChangePasswordModal()" class="px-3 py-1.5 text-xs font-semibold rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 transition-colors flex items-center gap-1.5">
+            <i data-lucide="key-round" class="w-3.5 h-3.5 text-slate-500"></i>
+            <span class="hidden md:inline">Password</span>
+          </button>
+          <button onclick="adminLogout()" class="px-3.5 py-1.5 text-xs font-semibold rounded-lg bg-red-600 hover:bg-red-700 text-white transition-colors flex items-center gap-1.5 shadow-sm">
+            <i data-lucide="log-out" class="w-3.5 h-3.5"></i>
+            <span>Logout</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ========================================================
+       SECTION 1: ADMIN LOGIN VIEW
+       ======================================================== -->
+  <main id="adminLoginSection" class="flex-1 flex items-center justify-center px-4 py-12 max-w-md mx-auto w-full page-fade">
+    <div class="w-full bg-white rounded-2xl p-6 sm:p-8 border border-slate-200 shadow-xl">
+      <div class="text-center mb-6">
+        <div class="w-14 h-14 bg-brand-800 text-amber-400 rounded-2xl flex items-center justify-center mx-auto mb-3 shadow-md shadow-brand-900/10">
+          <i data-lucide="lock" class="w-6 h-6"></i>
+        </div>
+        <h2 class="text-xl font-bold text-brand-900">Admin Document Portal</h2>
+        <p class="text-xs text-slate-500 mt-1">Humers Infratech • Sikar Division</p>
+      </div>
+
+      <!-- Login Alert / Error -->
+      <div id="loginAlert" class="hidden mb-4 p-3 rounded-xl bg-red-50 border border-red-200 text-red-700 text-xs flex items-center gap-2">
+        <i data-lucide="alert-circle" class="w-4 h-4 shrink-0"></i>
+        <span id="loginAlertText">Invalid credentials</span>
+      </div>
+
+      <form id="adminLoginForm" onsubmit="handleAdminLogin(event)" class="space-y-4">
+        <div>
+          <label class="block text-xs font-semibold text-slate-700 mb-1">Admin Username</label>
+          <div class="relative">
+            <i data-lucide="user" class="w-4 h-4 text-slate-400 absolute left-3 top-3"></i>
+            <input 
+              type="text" 
+              id="adminUsername" 
+              required 
+              placeholder="e.g. admin" 
+              class="w-full pl-9 pr-3 py-2.5 text-sm rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500"
+            />
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-xs font-semibold text-slate-700 mb-1">Password</label>
+          <div class="relative">
+            <i data-lucide="key" class="w-4 h-4 text-slate-400 absolute left-3 top-3"></i>
+            <input 
+              type="password" 
+              id="adminPassword" 
+              required 
+              placeholder="••••••••" 
+              class="w-full pl-9 pr-3 py-2.5 text-sm rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500"
+            />
+          </div>
+        </div>
+
+        <button 
+          type="submit" 
+          id="loginSubmitBtn"
+          class="w-full py-2.5 bg-brand-800 hover:bg-brand-900 text-white font-semibold text-sm rounded-xl transition-all shadow-md flex items-center justify-center gap-2"
+        >
+          <span>Sign In to Admin Portal</span>
+          <i data-lucide="arrow-right" class="w-4 h-4 text-amber-400"></i>
+        </button>
+      </form>
+
+      <!-- Default Credentials Note -->
+      <div class="mt-6 pt-4 border-t border-slate-100 text-center">
+        <p class="text-[11px] text-slate-400">
+          Default access: <span class="font-mono font-semibold text-slate-600">admin</span> / <span class="font-mono font-semibold text-slate-600">admin123</span>
+        </p>
+      </div>
+    </div>
+  </main>
+
+
+  <!-- ========================================================
+       SECTION 2: ADMIN DASHBOARD VIEW (WHEN LOGGED IN)
+       ======================================================== -->
+  <main id="adminDashboardSection" class="hidden flex-1 px-4 sm:px-6 py-6 max-w-7xl mx-auto w-full page-fade">
+    
+    <!-- Top Greeting & Stats Row -->
+    <div class="flex flex-col md:flex-row items-start md:items-center justify-between pb-6 border-b border-slate-200 gap-4">
+      <div>
+        <h1 class="text-2xl font-bold text-brand-900 font-['Cinzel'] tracking-wide">
+          Document Management System
+        </h1>
+        <p class="text-xs text-slate-500 mt-1">
+          Authorized Admin Control • Store & Organize Humers Infratech Documents
+        </p>
+      </div>
+      <div class="flex items-center gap-2">
+        <button onclick="scrollToUpload()" class="px-4 py-2 bg-amber-500 hover:bg-amber-600 text-white text-xs font-bold rounded-xl shadow-sm transition-all flex items-center gap-2">
+          <i data-lucide="plus-circle" class="w-4 h-4"></i>
+          <span>Upload Document</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Quick Stats Cards -->
+    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 my-6">
+      <div class="bg-white rounded-2xl p-5 border border-slate-200 shadow-sm flex items-center justify-between">
+        <div>
+          <span class="text-xs font-semibold text-slate-500 uppercase tracking-wider block">Stored Documents</span>
+          <span id="statTotalDocs" class="text-2xl font-extrabold text-brand-900 mt-1 block">0</span>
+        </div>
+        <div class="w-12 h-12 rounded-xl bg-brand-50 text-brand-800 flex items-center justify-center">
+          <i data-lucide="files" class="w-6 h-6"></i>
+        </div>
+      </div>
+
+      <div class="bg-white rounded-2xl p-5 border border-slate-200 shadow-sm flex items-center justify-between">
+        <div>
+          <span class="text-xs font-semibold text-slate-500 uppercase tracking-wider block">Total Storage</span>
+          <span id="statTotalSize" class="text-2xl font-extrabold text-brand-900 mt-1 block">0 KB</span>
+        </div>
+        <div class="w-12 h-12 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center">
+          <i data-lucide="hard-drive" class="w-6 h-6"></i>
+        </div>
+      </div>
+
+      <div class="bg-white rounded-2xl p-5 border border-slate-200 shadow-sm flex items-center justify-between">
+        <div>
+          <span class="text-xs font-semibold text-slate-500 uppercase tracking-wider block">Active Categories</span>
+          <span id="statCategories" class="text-2xl font-extrabold text-brand-900 mt-1 block">0</span>
+        </div>
+        <div class="w-12 h-12 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center">
+          <i data-lucide="layers" class="w-6 h-6"></i>
+        </div>
+      </div>
+    </div>
+
+    <!-- Main Content: Upload Section + Stored Documents List -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+      
+      <!-- Upload New Document Form (Left Column) -->
+      <div id="uploadSection" class="lg:col-span-5 bg-white rounded-2xl p-6 border border-slate-200 shadow-sm">
+        <div class="flex items-center gap-2 mb-4 pb-3 border-b border-slate-100">
+          <div class="w-8 h-8 rounded-lg bg-amber-100 text-amber-800 flex items-center justify-center">
+            <i data-lucide="upload-cloud" class="w-4 h-4"></i>
+          </div>
+          <div>
+            <h2 class="text-base font-bold text-slate-900">Upload New Document</h2>
+            <p class="text-[11px] text-slate-500">Only admin can upload and store records</p>
+          </div>
+        </div>
+
+        <div id="uploadAlert" class="hidden mb-4 p-3 rounded-xl text-xs flex items-center gap-2"></div>
+
+        <form id="documentUploadForm" onsubmit="handleDocumentUpload(event)" class="space-y-4">
+          <!-- Document Title -->
+          <div>
+            <label class="block text-xs font-semibold text-slate-700 mb-1">
+              Document Title <span class="text-red-500">*</span>
+            </label>
+            <input 
+              type="text" 
+              id="docTitle" 
+              required 
+              placeholder="e.g. Sikar Bypass Road Blueprint" 
+              class="w-full px-3 py-2 text-sm rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-amber-500"
+            />
+          </div>
+
+          <!-- Document Ref / Number -->
+          <div>
+            <label class="block text-xs font-semibold text-slate-700 mb-1">
+              Document Reference / Number
+            </label>
+            <input 
+              type="text" 
+              id="docNumber" 
+              placeholder="e.g. HMR-SKR-2026-001 (auto if empty)" 
+              class="w-full px-3 py-2 text-sm rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-amber-500 font-mono"
+            />
+          </div>
+
+          <!-- Category -->
+          <div>
+            <label class="block text-xs font-semibold text-slate-700 mb-1">
+              Category
+            </label>
+            <select 
+              id="docCategory" 
+              class="w-full px-3 py-2 text-sm rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-amber-500 bg-white"
+            >
+              <option value="Blueprints & Drawings">Blueprints & Drawings</option>
+              <option value="Contracts & Agreements">Contracts & Agreements</option>
+              <option value="Government NOC & Clearances">Government NOC & Clearances</option>
+              <option value="Invoices & Financials">Invoices & Financials</option>
+              <option value="Site Inspection Reports">Site Inspection Reports</option>
+              <option value="Structural & Safety Certificates">Structural & Safety Certificates</option>
+              <option value="Tax & Compliance">Tax & Compliance</option>
+              <option value="General Document">General Document</option>
+            </select>
+          </div>
+
+          <!-- Client / Project Name -->
+          <div>
+            <label class="block text-xs font-semibold text-slate-700 mb-1">
+              Client or Project Name
+            </label>
+            <input 
+              type="text" 
+              id="docClient" 
+              placeholder="e.g. Municipal Council Sikar / PWD" 
+              class="w-full px-3 py-2 text-sm rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-amber-500"
+            />
+          </div>
+
+          <!-- Description / Remarks -->
+          <div>
+            <label class="block text-xs font-semibold text-slate-700 mb-1">
+              Description / Notes
+            </label>
+            <textarea 
+              id="docDescription" 
+              rows="2" 
+              placeholder="Brief details regarding the document..." 
+              class="w-full px-3 py-2 text-sm rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-amber-500"
+            ></textarea>
+          </div>
+
+          <!-- File Input -->
+          <div>
+            <label class="block text-xs font-semibold text-slate-700 mb-1">
+              Select Document File <span class="text-red-500">*</span>
+            </label>
+            <div class="border-2 border-dashed border-slate-300 hover:border-amber-500 rounded-xl p-4 text-center cursor-pointer transition-colors relative bg-slate-50/50">
+              <input 
+                type="file" 
+                id="docFile" 
+                required 
+                class="absolute inset-0 opacity-0 cursor-pointer w-full h-full"
+                onchange="updateFileLabel(this)"
+              />
+              <div class="flex flex-col items-center">
+                <i data-lucide="file-up" class="w-8 h-8 text-slate-400 mb-1"></i>
+                <span id="fileSelectedLabel" class="text-xs font-medium text-slate-600">
+                  Click or drag file here (PDF, DOCX, XLSX, DWG, Images up to 50MB)
+                </span>
+                <span id="fileSelectedSub" class="text-[10px] text-slate-400 mt-0.5">Supports all common document formats</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Submit Button -->
+          <button 
+            type="submit" 
+            id="uploadSubmitBtn"
+            class="w-full py-2.5 bg-brand-800 hover:bg-brand-900 active:bg-brand-700 text-white font-semibold text-sm rounded-xl transition-all shadow-md flex items-center justify-center gap-2"
+          >
+            <i data-lucide="check-circle" class="w-4 h-4 text-amber-400"></i>
+            <span>Upload & Save Document</span>
+          </button>
+        </form>
+      </div>
+
+      <!-- Stored Documents Repository Table (Right Column) -->
+      <div class="lg:col-span-7 bg-white rounded-2xl p-6 border border-slate-200 shadow-sm flex flex-col">
+        
+        <!-- Table Search & Filter Bar -->
+        <div class="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 mb-4 pb-3 border-b border-slate-100">
+          <div>
+            <h2 class="text-base font-bold text-slate-900">Stored Documents</h2>
+            <p class="text-[11px] text-slate-500">Repository of documents available for public search</p>
+          </div>
+
+          <!-- Admin Document Search filter -->
+          <div class="relative w-full sm:w-64">
+            <i data-lucide="search" class="w-3.5 h-3.5 text-slate-400 absolute left-3 top-3"></i>
+            <input 
+              type="text" 
+              id="adminDocFilter" 
+              placeholder="Filter repository..." 
+              oninput="filterAdminDocs()"
+              class="w-full pl-8 pr-3 py-1.5 text-xs rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-amber-500"
+            />
+          </div>
+        </div>
+
+        <!-- Documents Table -->
+        <div class="overflow-x-auto flex-1">
+          <table class="w-full text-left border-collapse text-xs">
+            <thead>
+              <tr class="border-b border-slate-200 text-slate-500 font-semibold bg-slate-50/70">
+                <th class="py-2.5 px-3">Doc Ref / Title</th>
+                <th class="py-2.5 px-3">Category</th>
+                <th class="py-2.5 px-3">Client / Project</th>
+                <th class="py-2.5 px-3">File Size</th>
+                <th class="py-2.5 px-3 text-right">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="adminDocsTableBody" class="divide-y divide-slate-100">
+              <!-- Dynamically populated -->
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Empty Repository State -->
+        <div id="adminEmptyState" class="hidden py-12 text-center text-slate-400">
+          <i data-lucide="folder-search" class="w-10 h-10 mx-auto text-slate-300 mb-2"></i>
+          <p class="text-xs">No documents found matching filter.</p>
+        </div>
+
+      </div>
+
+    </div>
+  </main>
+
+  <!-- ========================================================
+       MODAL: EDIT DOCUMENT DETAILS
+       ======================================================== -->
+  <div id="editDocModal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 modal-backdrop">
+    <div class="bg-white rounded-2xl max-w-lg w-full p-6 shadow-2xl border border-slate-200">
+      <div class="flex items-center justify-between pb-3 border-b border-slate-100">
+        <h3 class="font-bold text-base text-slate-900">Edit Document Metadata</h3>
+        <button onclick="closeEditModal()" class="text-slate-400 hover:text-slate-600">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+
+      <form id="editDocForm" onsubmit="handleEditDocSubmit(event)" class="space-y-3 mt-4">
+        <input type="hidden" id="editDocId" />
+        
+        <div>
+          <label class="block text-xs font-semibold text-slate-700 mb-1">Document Title</label>
+          <input type="text" id="editDocTitle" required class="w-full px-3 py-2 text-sm rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-amber-500" />
+        </div>
+
+        <div>
+          <label class="block text-xs font-semibold text-slate-700 mb-1">Document Reference Number</label>
+          <input type="text" id="editDocNumber" class="w-full px-3 py-2 text-sm rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-amber-500 font-mono" />
+        </div>
+
+        <div>
+          <label class="block text-xs font-semibold text-slate-700 mb-1">Category</label>
+          <select id="editDocCategory" class="w-full px-3 py-2 text-sm rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-amber-500 bg-white">
+            <option value="Blueprints & Drawings">Blueprints & Drawings</option>
+            <option value="Contracts & Agreements">Contracts & Agreements</option>
+            <option value="Government NOC & Clearances">Government NOC & Clearances</option>
+            <option value="Invoices & Financials">Invoices & Financials</option>
+            <option value="Site Inspection Reports">Site Inspection Reports</option>
+            <option value="Structural & Safety Certificates">Structural & Safety Certificates</option>
+            <option value="Tax & Compliance">Tax & Compliance</option>
+            <option value="General Document">General Document</option>
+          </select>
+        </div>
+
+        <div>
+          <label class="block text-xs font-semibold text-slate-700 mb-1">Client or Project Name</label>
+          <input type="text" id="editDocClient" class="w-full px-3 py-2 text-sm rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-amber-500" />
+        </div>
+
+        <div>
+          <label class="block text-xs font-semibold text-slate-700 mb-1">Description / Notes</label>
+          <textarea id="editDocDescription" rows="2" class="w-full px-3 py-2 text-sm rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-amber-500"></textarea>
+        </div>
+
+        <div class="flex items-center justify-end gap-2 pt-3 border-t border-slate-100">
+          <button type="button" onclick="closeEditModal()" class="px-4 py-2 text-xs font-semibold rounded-xl text-slate-600 hover:bg-slate-100 transition-colors">
+            Cancel
+          </button>
+          <button type="submit" class="px-4 py-2 text-xs font-semibold rounded-xl bg-brand-800 hover:bg-brand-900 text-white shadow-sm transition-colors">
+            Save Changes
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ========================================================
+       MODAL: CHANGE ADMIN PASSWORD
+       ======================================================== -->
+  <div id="changePasswordModal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 modal-backdrop">
+    <div class="bg-white rounded-2xl max-w-sm w-full p-6 shadow-2xl border border-slate-200">
+      <div class="flex items-center justify-between pb-3 border-b border-slate-100">
+        <h3 class="font-bold text-base text-slate-900">Change Admin Password</h3>
+        <button onclick="closeChangePasswordModal()" class="text-slate-400 hover:text-slate-600">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+
+      <div id="passwordAlert" class="hidden my-3 p-3 rounded-xl text-xs flex items-center gap-2"></div>
+
+      <form id="changePasswordForm" onsubmit="handleChangePasswordSubmit(event)" class="space-y-3 mt-3">
+        <div>
+          <label class="block text-xs font-semibold text-slate-700 mb-1">Current Password</label>
+          <input type="password" id="currentPass" required class="w-full px-3 py-2 text-sm rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-amber-500" />
+        </div>
+
+        <div>
+          <label class="block text-xs font-semibold text-slate-700 mb-1">New Password (min 6 characters)</label>
+          <input type="password" id="newPass" required minlength="6" class="w-full px-3 py-2 text-sm rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-amber-500" />
+        </div>
+
+        <div>
+          <label class="block text-xs font-semibold text-slate-700 mb-1">Confirm New Password</label>
+          <input type="password" id="confirmPass" required minlength="6" class="w-full px-3 py-2 text-sm rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-amber-500" />
+        </div>
+
+        <div class="flex items-center justify-end gap-2 pt-3 border-t border-slate-100">
+          <button type="button" onclick="closeChangePasswordModal()" class="px-4 py-2 text-xs font-semibold rounded-xl text-slate-600 hover:bg-slate-100 transition-colors">
+            Cancel
+          </button>
+          <button type="submit" class="px-4 py-2 text-xs font-semibold rounded-xl bg-brand-800 hover:bg-brand-900 text-white shadow-sm transition-colors">
+            Update Password
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="js/admin.js"></script>
+</body>
+</html>

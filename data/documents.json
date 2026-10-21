@@ -1,0 +1,70 @@
+{
+  "admin": {
+    "username": "admin",
+    "passwordHash": "$2b$10$GS2Mc.oe7Pnndft2aU9EjeC7qdiEdAcqHTs7QtdKg.Vk7t7.H6lKG",
+    "name": "Humers Admin"
+  },
+  "documents": [
+    {
+      "id": "doc-1792562113779-akppsq",
+      "title": "silchar work order",
+      "docNumber": "HMR-113779",
+      "category": "General Document",
+      "clientName": "",
+      "description": "the total work order is200",
+      "fileName": "Tendernotice_1__21_-1792562113663-792535.pdf",
+      "originalName": "Tendernotice_1 (21).pdf",
+      "fileSize": 658733,
+      "mimeType": "application/pdf",
+      "createdAt": "2026-10-21T05:55:13.779Z",
+      "updatedAt": "2026-10-21T05:55:13.779Z"
+    },
+    {
+      "id": "doc-sample-1",
+      "title": "Sikar Bypass Road Infrastructure Blueprint",
+      "docNumber": "HMR-SKR-2026-001",
+      "category": "Blueprints & Drawings",
+      "clientName": "PWD Sikar & Urban Development",
+      "description": "Structural and civil blueprints for the dual-lane Sikar bypass corridor and drainage system.",
+      "fileName": "sample-blueprint.txt",
+      "originalName": "Sikar_Bypass_Blueprint.txt",
+      "fileSize": 1024,
+      "mimeType": "text/plain",
+      "createdAt": "2026-10-21T05:47:22.472Z",
+      "updatedAt": "2026-10-21T05:47:22.475Z"
+    },
+    {
+      "id": "doc-sample-2",
+      "title": "Commercial Complex Structural Agreement",
+      "docNumber": "HMR-AGR-2026-015",
+      "category": "Contracts & Agreements",
+      "clientName": "Sikar Commercial Hub Ltd.",
+      "description": "Official construction contract, milestones, compliance obligations, and payment terms.",
+      "fileName": "sample-agreement.txt",
+      "originalName": "Commercial_Agreement_2026.txt",
+      "fileSize": 2048,
+      "mimeType": "text/plain",
+      "createdAt": "2026-10-21T05:47:22.475Z",
+      "updatedAt": "2026-10-21T05:47:22.475Z"
+    },
+    {
+      "id": "doc-sample-3",
+      "title": "Municipal Building NOC & Environmental Clearance",
+      "docNumber": "HMR-NOC-2026-088",
+      "category": "Government NOC & Clearances",
+      "clientName": "Municipal Council Sikar",
+      "description": "Environmental impact assessment approval and municipal fire safety NOC certification.",
+      "fileName": "sample-noc.txt",
+      "originalName": "Municipal_NOC_Clearance.txt",
+      "fileSize": 1536,
+      "mimeType": "text/plain",
+      "createdAt": "2026-10-21T05:47:22.475Z",
+      "updatedAt": "2026-10-21T05:47:22.475Z"
+    }
+  ],
+  "settings": {
+    "companyName": "Humers Infratech",
+    "location": "Sikar",
+    "tagline": "Civil Engineering & Infrastructure Documentation Portal"
+  }
+}

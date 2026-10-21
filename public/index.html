@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Humers Infratech | Sikar - Official Document Portal</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Cinzel:wght@600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <!-- Custom Stylesheet -->
+  <link rel="stylesheet" href="css/styles.css">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              900: '#0b1d30',
+              800: '#0f2b46',
+              700: '#163d63',
+              600: '#1e5285',
+              100: '#e2e8f0',
+              50: '#f8fafc'
+            },
+            accent: {
+              500: '#d97706',
+              600: '#b45309',
+              400: '#f59e0b'
+            }
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="blueprint-bg min-h-screen flex flex-col justify-between selection:bg-amber-100 selection:text-amber-900">
+
+  <!-- ========================================================
+       TOP HEADER / NAVIGATION
+       ======================================================== -->
+  <header class="w-full bg-white/80 backdrop-blur-md border-b border-slate-200 sticky top-0 z-40 transition-all">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
+      <!-- Logo Branding -->
+      <a href="javascript:void(0)" onclick="navigateTo('search')" class="flex items-center gap-3 group">
+        <div class="w-10 h-10 rounded-lg bg-brand-800 flex items-center justify-center text-amber-400 font-bold shadow-md shadow-brand-900/10 group-hover:bg-brand-900 transition-colors">
+          <i data-lucide="building-2" class="w-5 h-5"></i>
+        </div>
+        <div>
+          <span class="font-extrabold tracking-wider text-brand-800 text-sm sm:text-base uppercase font-['Cinzel'] block leading-none">Humers Infratech</span>
+          <span class="text-[11px] font-semibold text-amber-600 tracking-widest uppercase block mt-1">Sikar</span>
+        </div>
+      </a>
+
+      <!-- Navigation Actions -->
+      <div class="flex items-center gap-3">
+        <!-- Switch View Buttons -->
+        <button id="navBtnSearch" onclick="navigateTo('search')" class="hidden px-3.5 py-1.5 text-xs font-semibold rounded-md border border-slate-300 text-slate-700 hover:bg-slate-100 transition-all flex items-center gap-1.5">
+          <i data-lucide="search" class="w-3.5 h-3.5"></i>
+          <span>Search Page</span>
+        </button>
+
+        <button id="navBtnExit" onclick="navigateTo('thankyou')" title="Exit and finish session" class="px-3.5 py-1.5 text-xs font-semibold rounded-md bg-slate-100 hover:bg-slate-200 text-slate-700 transition-all flex items-center gap-1.5">
+          <i data-lucide="log-out" class="w-3.5 h-3.5 text-slate-500"></i>
+          <span>Finish / Exit</span>
+        </button>
+
+        <!-- Admin Portal Link -->
+        <a href="/admin" class="px-3.5 py-1.5 text-xs font-semibold rounded-md bg-brand-800 hover:bg-brand-900 text-white shadow-sm flex items-center gap-1.5 transition-all">
+          <i data-lucide="shield-check" class="w-3.5 h-3.5 text-amber-400"></i>
+          <span>Admin Login</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- ========================================================
+       PAGE 1: MAIN SEARCH SCREEN (MATCHES DRAWING 1)
+       "Humers Infratech"
+       "sikar"
+       "Let's Find _ _ _ _ _"
+       Documents are NOT shown initially! Only shown after search!
+       ======================================================== -->
+  <main id="viewSearch" class="flex-1 flex flex-col items-center justify-center px-4 py-8 max-w-5xl mx-auto w-full page-fade">
+    
+    <!-- Hero Branding Section (Exactly as drawn by user) -->
+    <div id="searchHeroContainer" class="w-full text-center py-6 transition-all duration-300">
+      <!-- Title & Sikar Location -->
+      <div class="inline-block relative">
+        <h1 class="brand-title text-3xl sm:text-5xl lg:text-6xl text-brand-800 tracking-wider">
+          Humers Infratech
+        </h1>
+        <div class="mt-2 text-sm sm:text-lg brand-location flex items-center justify-center gap-2">
+          <span class="w-8 h-[2px] bg-amber-500 hidden sm:inline-block"></span>
+          <span>Sikar</span>
+          <span class="w-8 h-[2px] bg-amber-500 hidden sm:inline-block"></span>
+        </div>
+      </div>
+      <p class="text-xs sm:text-sm text-slate-500 mt-3 font-normal max-w-md mx-auto">
+        Secure Corporate Document Retrieval System
+      </p>
+
+      <!-- Main Search Bar: Placeholder "Let's Find....." -->
+      <div class="mt-8 max-w-2xl mx-auto px-2">
+        <form id="searchForm" onsubmit="handleSearch(event)" class="relative search-glow rounded-2xl bg-white border-2 border-slate-300 overflow-hidden flex items-center p-1.5 sm:p-2">
+          
+          <!-- Search Icon -->
+          <div class="pl-3 sm:pl-4 pr-2 text-brand-700">
+            <i data-lucide="search" class="w-6 h-6"></i>
+          </div>
+
+          <!-- Input with exact placeholder from sketch -->
+          <input 
+            type="text" 
+            id="searchInput" 
+            placeholder="Let's Find....." 
+            autocomplete="off"
+            class="w-full py-2.5 sm:py-3 px-2 text-base sm:text-lg text-slate-800 bg-transparent focus:outline-none placeholder:text-slate-400 placeholder:italic font-medium"
+          />
+
+          <!-- Clear query button -->
+          <button 
+            type="button" 
+            id="clearSearchBtn" 
+            onclick="clearSearch()" 
+            class="hidden text-slate-400 hover:text-slate-600 p-2 mr-1 transition-colors"
+            title="Clear"
+          >
+            <i data-lucide="x" class="w-4 h-4"></i>
+          </button>
+
+          <!-- Search Submit Button -->
+          <button 
+            type="submit" 
+            class="px-5 sm:px-7 py-2.5 sm:py-3 bg-brand-800 hover:bg-brand-900 active:bg-brand-700 text-white font-semibold text-sm sm:text-base rounded-xl transition-all shadow-md flex items-center gap-2 shrink-0"
+          >
+            <span>Search</span>
+            <i data-lucide="arrow-right" class="w-4 h-4 text-amber-400"></i>
+          </button>
+        </form>
+
+        <!-- Category Filters (Optional Helper Pills) -->
+        <div class="flex flex-wrap items-center justify-center gap-2 mt-4 text-xs">
+          <span class="text-slate-400 font-medium">Quick categories:</span>
+          <button type="button" onclick="quickFilter('')" class="cat-pill active px-3 py-1 rounded-full bg-brand-800 text-white font-medium transition-colors" data-cat="">All</button>
+          <button type="button" onclick="quickFilter('Blueprints')" class="cat-pill px-3 py-1 rounded-full bg-slate-200 text-slate-700 hover:bg-slate-300 font-medium transition-colors" data-cat="Blueprints">Blueprints</button>
+          <button type="button" onclick="quickFilter('Contracts')" class="cat-pill px-3 py-1 rounded-full bg-slate-200 text-slate-700 hover:bg-slate-300 font-medium transition-colors" data-cat="Contracts">Contracts</button>
+          <button type="button" onclick="quickFilter('NOC')" class="cat-pill px-3 py-1 rounded-full bg-slate-200 text-slate-700 hover:bg-slate-300 font-medium transition-colors" data-cat="NOC">NOC & Clearances</button>
+          <button type="button" onclick="quickFilter('Invoices')" class="cat-pill px-3 py-1 rounded-full bg-slate-200 text-slate-700 hover:bg-slate-300 font-medium transition-colors" data-cat="Invoices">Invoices</button>
+        </div>
+      </div>
+
+      <!-- Arrow diagram hint matching sketch -->
+      <div id="sketchArrowHint" class="mt-8 flex flex-col items-center text-slate-400">
+        <span class="text-xs tracking-wider uppercase text-slate-400">Search above to find stored documents</span>
+        <div class="mt-1 animate-bounce">
+          <i data-lucide="corner-down-right" class="w-5 h-5 text-amber-500"></i>
+        </div>
+      </div>
+    </div>
+
+    <!-- ========================================================
+         SEARCH RESULTS CONTAINER (HIDDEN INITIALLY!)
+         Stored documents are NOT shown on main screen until search
+         ======================================================== -->
+    <div id="searchResultsSection" class="hidden w-full max-w-4xl mt-6">
+      
+      <!-- Results Bar Header -->
+      <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between pb-4 mb-4 border-b border-slate-200 gap-3">
+        <div>
+          <h2 class="text-lg font-bold text-brand-900 flex items-center gap-2">
+            <i data-lucide="file-check-2" class="w-5 h-5 text-amber-600"></i>
+            <span id="resultsCountText">Search Results</span>
+          </h2>
+          <p id="resultsQuerySubtext" class="text-xs text-slate-500 mt-0.5">Displaying matching documents</p>
+        </div>
+
+        <!-- Action to proceed to Thank You Page -->
+        <div class="flex items-center gap-2">
+          <button onclick="clearSearch()" class="px-3 py-1.5 text-xs font-medium rounded-lg text-slate-600 hover:bg-slate-200 transition-colors">
+            Clear Search
+          </button>
+          <button onclick="navigateTo('thankyou')" class="px-4 py-1.5 text-xs font-semibold rounded-lg bg-amber-500 hover:bg-amber-600 text-white shadow-sm transition-all flex items-center gap-1.5">
+            <span>Finished Viewing</span>
+            <i data-lucide="check-circle-2" class="w-3.5 h-3.5"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- Loading Spinner -->
+      <div id="searchLoading" class="hidden py-12 text-center">
+        <div class="inline-block animate-spin rounded-full h-8 w-8 border-4 border-brand-800 border-t-transparent"></div>
+        <p class="text-sm text-slate-500 mt-2">Searching secure repository...</p>
+      </div>
+
+      <!-- No Results State -->
+      <div id="noResultsBox" class="hidden bg-white rounded-2xl p-8 border border-slate-200 text-center shadow-sm">
+        <div class="w-14 h-14 bg-amber-50 text-amber-600 rounded-full flex items-center justify-center mx-auto mb-3">
+          <i data-lucide="file-search" class="w-7 h-7"></i>
+        </div>
+        <h3 class="text-base font-bold text-slate-800">No documents found</h3>
+        <p id="noResultsMsg" class="text-xs sm:text-sm text-slate-500 mt-1 max-w-md mx-auto">
+          No records match your query. Try searching by project name, document ID, or general keyword.
+        </p>
+      </div>
+
+      <!-- Documents Result Grid / List -->
+      <div id="documentsList" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <!-- Dynamic Result Cards Injected by JS -->
+      </div>
+    </div>
+  </main>
+
+
+  <!-- ========================================================
+       PAGE 2: THANK YOU / EXIT SCREEN (MATCHES DRAWING 2)
+       "Have a nice day"
+       "Thank You"
+       "Humers Infratech Sikar"
+       ======================================================== -->
+  <main id="viewThankYou" class="hidden flex-1 flex flex-col items-center justify-center px-4 py-12 max-w-2xl mx-auto w-full page-fade">
+    <div class="thankyou-card w-full p-8 sm:p-12 text-center bg-white">
+      
+      <!-- Decorative Civil Engineering Seal / Icon -->
+      <div class="w-20 h-20 bg-gradient-to-tr from-brand-800 to-brand-700 text-amber-400 rounded-3xl mx-auto flex items-center justify-center shadow-xl shadow-brand-900/10 mb-6 border-4 border-amber-50">
+        <i data-lucide="sparkles" class="w-10 h-10"></i>
+      </div>
+
+      <!-- Large Greeting exactly matching Drawing 2 -->
+      <h1 class="text-4xl sm:text-6xl font-bold text-brand-900 tracking-tight leading-tight font-['Caveat',cursive]">
+        Have a nice day
+      </h1>
+
+      <!-- "Thank You" Subheading matching Drawing 2 -->
+      <h2 class="text-3xl sm:text-5xl font-bold text-amber-600 mt-2 tracking-wide font-['Caveat',cursive]">
+        Thank You
+      </h2>
+
+      <!-- Subtle Company Subtitle -->
+      <div class="mt-6 pt-6 border-t border-slate-100">
+        <div class="brand-title text-base sm:text-lg text-brand-800">
+          Humers Infratech
+        </div>
+        <div class="brand-location text-xs text-amber-600 font-semibold mt-1">
+          Sikar
+        </div>
+        <p class="text-xs text-slate-500 mt-3 max-w-md mx-auto">
+          Your document query session has ended safely. For queries, contact Humers Infratech office, Sikar.
+        </p>
+      </div>
+
+      <!-- Action: Return to Search Page -->
+      <div class="mt-8 flex flex-col sm:flex-row items-center justify-center gap-3">
+        <button onclick="navigateTo('search')" class="w-full sm:w-auto px-6 py-3 bg-brand-800 hover:bg-brand-900 active:bg-brand-700 text-white font-semibold rounded-xl transition-all shadow-md flex items-center justify-center gap-2 text-sm">
+          <i data-lucide="search" class="w-4 h-4 text-amber-400"></i>
+          <span>Let's Find Another Document</span>
+        </button>
+      </div>
+
+    </div>
+  </main>
+
+
+  <!-- ========================================================
+       DOCUMENT VIEWER MODAL
+       Allows inline viewing of PDF, Images, or Text
+       ======================================================== -->
+  <div id="viewerModal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 modal-backdrop">
+    <div class="bg-white rounded-2xl max-w-4xl w-full h-[90vh] flex flex-col shadow-2xl overflow-hidden border border-slate-200">
+      
+      <!-- Modal Header -->
+      <div class="px-5 py-4 bg-slate-900 text-white flex items-center justify-between border-b border-slate-800 shrink-0">
+        <div class="flex items-center gap-3 min-w-0">
+          <div class="w-8 h-8 rounded-lg bg-amber-500/20 text-amber-400 flex items-center justify-center shrink-0">
+            <i data-lucide="file-text" class="w-4 h-4"></i>
+          </div>
+          <div class="truncate">
+            <h3 id="modalDocTitle" class="font-bold text-sm sm:text-base text-white truncate">Document Preview</h3>
+            <p id="modalDocMeta" class="text-xs text-slate-400 truncate">Humers Infratech • Sikar</p>
+          </div>
+        </div>
+        
+        <div class="flex items-center gap-2 shrink-0">
+          <a id="modalDownloadLink" href="#" download class="px-3 py-1.5 text-xs font-semibold rounded-lg bg-slate-800 hover:bg-slate-700 text-white transition-colors flex items-center gap-1.5 border border-slate-700">
+            <i data-lucide="download" class="w-3.5 h-3.5 text-amber-400"></i>
+            <span class="hidden sm:inline">Download</span>
+          </a>
+          <!-- Close Modal & Go to Thank You (Page 2) -->
+          <button onclick="closeViewerModal(true)" class="p-1.5 text-slate-400 hover:text-white rounded-lg hover:bg-slate-800 transition-colors" title="Close and Finish">
+            <i data-lucide="x" class="w-5 h-5"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- Modal Body (Preview Canvas / Frame) -->
+      <div id="modalViewerContent" class="flex-1 bg-slate-100 overflow-auto flex items-center justify-center p-2 sm:p-4">
+        <!-- Content will be injected dynamically (iframe / img / pre) -->
+      </div>
+
+      <!-- Modal Footer (Prompt to transition to Thank You page) -->
+      <div class="px-5 py-3 bg-white border-t border-slate-200 flex flex-col sm:flex-row items-center justify-between gap-2 shrink-0">
+        <span class="text-xs text-slate-500">Done reviewing this document?</span>
+        <div class="flex items-center gap-2 w-full sm:w-auto">
+          <button onclick="closeViewerModal(false)" class="flex-1 sm:flex-none px-4 py-2 text-xs font-semibold rounded-lg text-slate-700 bg-slate-100 hover:bg-slate-200 transition-colors">
+            Keep Searching
+          </button>
+          <button onclick="closeViewerModal(true)" class="flex-1 sm:flex-none px-4 py-2 text-xs font-semibold rounded-lg bg-brand-800 hover:bg-brand-900 text-white transition-colors flex items-center justify-center gap-1.5 shadow-sm">
+            <span>Done (Finish Session)</span>
+            <i data-lucide="arrow-right" class="w-3.5 h-3.5 text-amber-400"></i>
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+
+  <!-- ========================================================
+       FOOTER
+       ======================================================== -->
+  <footer class="w-full bg-white border-t border-slate-200 py-4 px-4 text-center text-xs text-slate-500 shrink-0">
+    <div class="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-2">
+      <div class="flex items-center gap-2">
+        <span class="font-bold text-brand-800 uppercase tracking-wider font-['Cinzel']">Humers Infratech</span>
+        <span>•</span>
+        <span class="text-amber-600 font-medium">Sikar, Rajasthan</span>
+      </div>
+      <div>
+        <span>Authorized Engineering & Corporate Records Portal</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="js/app.js"></script>
+</body>
+</html>

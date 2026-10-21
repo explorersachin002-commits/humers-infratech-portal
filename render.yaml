@@ -1,0 +1,22 @@
+services:
+  - type: web
+    name: humers-infratech-portal
+    runtime: node
+    plan: free
+    buildCommand: npm ci --omit=dev
+    startCommand: npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 10000
+      - key: SESSION_SECRET
+        generateValue: true
+      - key: COOKIE_SECURE
+        value: "true"
+      - key: UPLOAD_MAX_MB
+        value: "50"
+    disk:
+      name: humers-storage
+      mountPath: /opt/render/project/src/uploads
+      sizeGB: 1
